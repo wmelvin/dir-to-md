@@ -143,3 +143,11 @@ def test_overwrite_force(monkeypatch, capsys, tmp_path):
     main()
 
     assert output_file.read_text(encoding="utf-8") != "old content"
+
+def test_version(monkeypatch, capsys):
+    monkeypatch.setattr(sys, "argv", ["dir-to-md", "--version"])
+    with pytest.raises(SystemExit):
+        main()
+    captured = capsys.readouterr()
+    # argparse prints version to stdout
+    assert "dir-to-md" in captured.out

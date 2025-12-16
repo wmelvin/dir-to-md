@@ -125,3 +125,9 @@ By default, an existing file should not be overwritten.
 Add another argument to allow overwriting an existing output file using the force option as `-f` or `--force`.
 
 Add tests to cover these new options.
+
+---
+
+#### Prompt 6
+
+Include the version number in the help/usage message. The version should be the same as in the `pyproject.toml` file.

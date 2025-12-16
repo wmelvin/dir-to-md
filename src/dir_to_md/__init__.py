@@ -2,11 +2,20 @@ import argparse
 import sys
 from pathlib import Path
 from datetime import datetime
+from importlib.metadata import version, PackageNotFoundError
 
 
 def main():
+    try:
+        __version__ = version("dir-to-md")
+    except PackageNotFoundError:
+        __version__ = "unknown"
+
     parser = argparse.ArgumentParser(
         description="Generate a Markdown listing of a directory."
+    )
+    parser.add_argument(
+        "-v", "--version", action="version", version=f"%(prog)s {__version__}"
     )
     parser.add_argument("dir_name", help="Directory to scan")
     parser.add_argument("-o", "--output", help="Output file name or path")
