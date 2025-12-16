@@ -21,6 +21,10 @@ def main():
     # Get sorted list of files (no recursion)
     files = sorted([f for f in dir_path.iterdir() if f.is_file()], key=lambda x: x.name)
 
+    if not files:
+        print("No files found.")
+        return
+
     # Generate Markdown content
     lines = []
     lines.append(f"# {dir_path.name}")
