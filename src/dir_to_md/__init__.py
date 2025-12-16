@@ -3,9 +3,16 @@ import sys
 from pathlib import Path
 from datetime import datetime
 
+
 def main():
-    parser = argparse.ArgumentParser(description="Generate a Markdown listing of a directory.")
+    parser = argparse.ArgumentParser(
+        description="Generate a Markdown listing of a directory."
+    )
     parser.add_argument("dir_name", help="Directory to scan")
+    parser.add_argument("-o", "--output", help="Output file name or path")
+    parser.add_argument(
+        "-f", "--force", action="store_true", help="Overwrite existing output file"
+    )
     args = parser.parse_args()
 
     dir_path = Path(args.dir_name)
@@ -35,7 +42,7 @@ def main():
     for f in files:
         # Create anchor link based on example: File1.ext -> #file1ext
         # Removing dots and lowercasing.
-        anchor = f.name.lower().replace('.', '').replace(' ', '-')
+        anchor = f.name.lower().replace(".", "").replace(" ", "-")
         lines.append(f"* [{f.name}](#{anchor})")
 
     lines.append("")
@@ -44,10 +51,30 @@ def main():
         lines.append(f"### {f.name}")
         lines.append("")
 
-    output_filename = f"dir-to-md-{datetime.now().strftime('%Y%m%d_%H%M%S')}.md"
-    
-    with open(output_filename, "w", encoding="utf-8") as f:
+    if args.output:
+        output_path = Path(args.output)
+        # Check if parent directory exists
+        # Path('filename').parent is Path('.') which exists.
+        # Path('path/to/filename').parent is Path('path/to')
+        if not output_path.parent.exists():
+            print(
+                f"Error: Parent directory '{output_path.parent}' does not exist.",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+    else:
+        output_path = Path(f"dir-to-md-{datetime.now().strftime('%Y%m%d_%H%M%S')}.md")
+
+    if output_path.exists() and not args.force:
+        print(
+            f"Error: Output file '{output_path}' already exists. Use -f to overwrite.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    with open(output_path, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
+
 
 if __name__ == "__main__":
     main()

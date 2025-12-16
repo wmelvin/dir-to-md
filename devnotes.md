@@ -113,3 +113,15 @@ Also added Ruff for dev.
     uv add --dev ruff
 
 ---
+
+#### Prompt 5
+
+Add a command line argument for specifying the output file using the `-o` and `--output` options.
+The argument can be just the file name, or a full path for the file.
+If the argument is only a file name then the file should be created in the current working directory.
+If the argument includes a path then the parent directory must exist, otherwise exit with an error message.
+By default, an existing file should not be overwritten.
+
+Add another argument to allow overwriting an existing output file using the force option as `-f` or `--force`.
+
+Add tests to cover these new options.
