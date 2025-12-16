@@ -1,6 +1,5 @@
 import sys
 import pytest
-from pathlib import Path
 from dir_to_md import main
 
 def test_help_short(monkeypatch, capsys):
