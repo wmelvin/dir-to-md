@@ -35,7 +35,9 @@ def main():
         sys.exit(1)
 
     # Get sorted list of files (no recursion)
-    files = sorted([f for f in dir_path.iterdir() if f.is_file()], key=lambda x: x.name)
+    files = sorted(
+        [f for f in dir_path.iterdir() if f.is_file()], key=lambda x: x.name.lower()
+    )
 
     if not files:
         print("No files found.")

@@ -131,3 +131,12 @@ Add tests to cover these new options.
 #### Prompt 6
 
 Include the version number in the help/usage message. The version should be the same as in the `pyproject.toml` file.
+
+---
+
+### 2025-12-17
+
+#### Prompt 7
+
+Make the sorting of file names case insensitive. Also bump the version to `0.1.1`.
+
